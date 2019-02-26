@@ -8,10 +8,11 @@ import cv2
 import os
 import re
 
-from config import video_path
+from config import video_path1 as video_path
 
 
 def get_videos_duration(video_folder_path):
+    print(video_folder_path)
     k = get_files(video_folder_path)
     data = []
     for name in k:
