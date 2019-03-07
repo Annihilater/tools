@@ -120,3 +120,6 @@ gen### Example user template template
 out
 gen
 /config.py
+/scripts/
+/secure.py
+/data/
