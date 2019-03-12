@@ -8,8 +8,8 @@ import cv2
 import os
 import re
 
-from config import VIDEO_PATH4, VIDEO_PATH
-from running_time import running_time
+from config import VIDEO_PATH4
+from function.running_time import running_time
 
 
 @running_time
