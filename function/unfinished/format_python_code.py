@@ -11,9 +11,9 @@ from config import PATH
 
 
 def format_single_file(p):
-    os.system('autopep8 --in-place --aggressive --aggressive {}'.format(p))
-    name = p.split('/')[-1]
-    print(name + '-' * (40 - len(name)) + 'ok...')
+    os.system("autopep8 --in-place --aggressive --aggressive {}".format(p))
+    name = p.split("/")[-1]
+    print(name + "-" * (40 - len(name)) + "ok...")
 
 
 def format_python_code(path_or_file):
@@ -27,7 +27,7 @@ def format_python_code(path_or_file):
         g = os.walk(path_or_file)
         for path, dir_list, file_list in g:
             for file_name in file_list:
-                if file_name.endswith('.py'):
+                if file_name.endswith(".py"):
                     file_path = os.path.join(path, file_name)
                     format_single_file(file_path)
                     num += 1
@@ -38,9 +38,9 @@ def format_python_code(path_or_file):
         print("it's a special file(socket,FIFO,device file)")
 
     time_consuming = time.time() - t0
-    print('处理 ' + str(num) + ' 个文件; ' + '耗时: ' + str(time_consuming) + ' 秒')
+    print("处理 " + str(num) + " 个文件; " + "耗时: " + str(time_consuming) + " 秒")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     my_path = PATH
     format_python_code(my_path)

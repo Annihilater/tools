@@ -14,6 +14,6 @@ def running_time(func):
         end_time = time.time()
         used_time = end_time - start_time
         # 打印结果为 00:05:39 的形式
-        print('运行时间: ', time.strftime('%H:%M:%S', time.gmtime(used_time)))
+        print("运行时间: ", time.strftime("%H:%M:%S", time.gmtime(used_time)))
 
     return wrapper

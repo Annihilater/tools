@@ -14,8 +14,8 @@ from secure import SQLALCHEMY_DATABASE_URI
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI)  # 初始化数据库连接，使用pymysql模块
 
-df = pd.read_csv("E://mpg.csv", sep=',')  # 读取本地CSV文件
+df = pd.read_csv("E://mpg.csv", sep=",")  # 读取本地CSV文件
 
-df.to_sql('mpg', engine, index=False)  # 将新建的DataFrame储存为MySQL中的数据表，不储存index列
+df.to_sql("mpg", engine, index=False)  # 将新建的DataFrame储存为MySQL中的数据表，不储存index列
 
 print("Write to MySQL successfully!")

@@ -11,15 +11,15 @@ import xlwt
 
 
 def csv_to_xlsx_pd():
-    csv = pd.read_csv('1.csv', encoding='utf-8')
-    csv.to_excel('1.xlsx', sheet_name='data')
+    csv = pd.read_csv("1.csv", encoding="utf-8")
+    csv.to_excel("1.xlsx", sheet_name="data")
 
 
 def csv_to_xlsx():
-    with open('../data/test.csv', 'r', encoding='utf-8') as f:
+    with open("../data/test.csv", "r", encoding="utf-8") as f:
         read = csv.reader(f)
         workbook = xlwt.Workbook()
-        sheet = workbook.add_sheet('data')  # 创建一个sheet表格
+        sheet = workbook.add_sheet("data")  # 创建一个sheet表格
         l = 0
         for line in read:
             print(line)
@@ -30,9 +30,9 @@ def csv_to_xlsx():
                 r = r + 1
             l = l + 1
 
-        workbook.save('../data/test.xlsx')  # 保存Excel
+        workbook.save("../data/test.xlsx")  # 保存Excel
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     csv_to_xlsx_pd()
     csv_to_xlsx()

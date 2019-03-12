@@ -31,10 +31,10 @@ def write_to_excel(title_list, file_path, data):
     """
     if not os.path.exists(file_path):
         book = xlwt.Workbook()
-        file_name = file_path.split('/')[-1]
+        file_name = file_path.split("/")[-1]
         sheet1 = book.add_sheet(sheetname=file_name, cell_overwrite_ok=True)
         for i in range(0, len(title_list)):
-            sheet1.write(0, i, title_list[i], set_style('Times New Roman', 220, True))
+            sheet1.write(0, i, title_list[i], set_style("Times New Roman", 220, True))
         book.save(file_path)
 
     read_book = open_workbook(file_path, on_demand=True)  # 用wlrd提供的方法读取一个excel文件
@@ -43,7 +43,12 @@ def write_to_excel(title_list, file_path, data):
     sheet1 = write_book.get_sheet(0)  # xlwt 对象的 sheet1 具有 write 权限方便后面写入数据
     for row in range(0, len(data)):
         for column in range(0, len(data[row])):
-            sheet1.write(base_rows + row, column, data[row][column], set_style('Times New Roman', 220, True))
+            sheet1.write(
+                base_rows + row,
+                column,
+                data[row][column],
+                set_style("Times New Roman", 220, True),
+            )
     write_book.save(file_path)
 
-    print('成功写入 excel')
+    print("成功写入 excel")
