@@ -15,16 +15,13 @@ from aliyunsdkcore.client import AcsClient
 from aliyunsdkecs.request.v20140526.DescribeInstancesRequest import DescribeInstancesRequest
 from scp import SCPClient
 
-# gh.api.99988866.xyz 加速
-gh_kube = 'https://gh.api.99988866.xyz/https://github.com/sealstore/cloud-kernel/releases/download/offline/kube1.14.1.tar.gz'
-gh_sealos = 'https://gh.api.99988866.xyz/https://github.com/fanux/sealos/releases/download/v3.3.4/sealos'
-aliyun_password = '4 台阿里云服务器的密码（必须设置为一样的）'
+aliyun_password = '4 台阿里云服务器的密码'
 
 
 class Sealos(object):
     def __init__(self, region_id):
-        self.access_id = '<AccessKey>'
-        self.access_secret = '<AccessSecret>'
+        self.access_id = ''
+        self.access_secret = ''
         self.region_id = region_id
         self.ssh_client = None
         self.private_ip_list = []
@@ -150,12 +147,10 @@ class Sealos(object):
     def download_kubernetes_sealos(self):
         """登录 master1 下载 kubernetes/sealos"""
         self.login_master_1()
-
-        # gh.api.99988866.xyz github 下载加速
-        self.exec_cmd(f'wget {gh_kube}')
-        self.exec_cmd(f'wget {gh_sealos}')
-
-        self.exec_cmd('chmod +x sealos && mv sealos /usr/bin')
+        self.exec_cmd(
+            'wget -c https://sealyun.oss-cn-beijing.aliyuncs.com/latest/sealos && chmod +x sealos && mv sealos /usr/bin ')
+        self.exec_cmd(
+            'wget -c https://sealyun.oss-cn-beijing.aliyuncs.com/d551b0b9e67e0416d0f9dce870a16665-1.18.0/kube1.18.0.tar.gz ')
         self.ssh_client.close()
 
     def install_sealos(self):
@@ -163,14 +158,11 @@ class Sealos(object):
         self.login_master_1()
         # 创建集群的时候使用内网 IP
         ips = self.private_ip_list
-        cmd = f"""sealos init --master {ips[0]} \
---master {ips[1]} \
---master {ips[2]} \
---node {ips[3]} \
---user root \
---passwd {aliyun_password} \
---version v1.14.1 \
---pkg-url /root/kube1.14.1.tar.gz"""
+        cmd = f"""sealos init --passwd {aliyun_password} \
+	--master {ips[0]}  --master {ips[1]}  --master {ips[2]}  \
+	--node {ips[4]} \
+	--pkg-url /root/kube1.18.0.tar.gz \
+	--version v1.18.0"""
         self.exec_cmd(cmd)
         self.ssh_client.close()
 
@@ -186,7 +178,7 @@ if __name__ == '__main__':
     start = datetime.datetime.now()
     seal = Sealos(region_id='cn-zhangjiakou')
     seal.install_docker()
-    seal.download_kubernetes_sealos()  # 阿里云 OSS 流量贵啊
+    seal.download_kubernetes_sealos()
     seal.install_sealos()
     seal.check_sealos()
     end = datetime.datetime.now()
